@@ -19,7 +19,10 @@ Run the server locally:
 ```
 go run main.go
 ```
-
+Bring up the database with below command:
+```
+docker-compose up
+```
 ## API Endpoints
 
 1. User Sign Up
