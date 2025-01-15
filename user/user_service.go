@@ -6,15 +6,15 @@ import (
 	utils "user-service/utlis"
 )
 
-type UserService struct {
+type userService struct {
 	Repo database.UserRepo
 }
 
-func NewUserService(repo database.UserRepo) *UserService {
-	return &UserService{Repo: repo}
+func NewUserService(repo database.UserRepo) UserInterface {
+	return &userService{Repo: repo}
 }
 
-func (s *UserService) SignUp(input UserInput) error {
+func (s *userService) SignUp(input UserInput) error {
 	// Check if user already exists
 	_, err := s.Repo.FindUserByEmail(input.Email)
 	if err == nil {
@@ -36,7 +36,7 @@ func (s *UserService) SignUp(input UserInput) error {
 }
 
 // SignIn authenticates a user by email and password
-func (s *UserService) SignIn(input UserInput) (*User, error) {
+func (s *userService) SignIn(input UserInput) (*User, error) {
 	// Fetch the user by email
 	user, err := s.Repo.FindUserByEmail(input.Email)
 	if err != nil {
@@ -62,11 +62,11 @@ func toUserModel(user *database.User) *User {
 	}
 }
 
-func (s *UserService) ListUsers() ([]*User, error) {
+func (s *userService) ListUsers() ([]*User, error) {
 	return s.toUserModelList(s.Repo.GetAllUsers())
 }
 
-func (s *UserService) toUserModelList(users []database.User, err error) ([]*User, error) {
+func (s *userService) toUserModelList(users []database.User, err error) ([]*User, error) {
 	if err != nil {
 		return nil, err
 	}

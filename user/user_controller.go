@@ -6,7 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func RegisterRoutes(r *gin.Engine, userService *UserService) {
+func RegisterRoutes(r *gin.Engine, userService UserInterface) {
 	r.POST("/user/signup", func(c *gin.Context) {
 		var input UserInput
 		if err := c.ShouldBindJSON(&input); err != nil {
